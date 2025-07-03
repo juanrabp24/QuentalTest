@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JugadoresRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JugadoresRepository::class)]
@@ -25,8 +27,8 @@ class Jugadores
     #[ORM\Column(nullable: true)]
     private ?int $salario = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $baja = null;
+    #[ORM\ManyToOne(inversedBy: 'jugadores')]
+    private ?Clubes $club = null;
 
     public function getId(): ?int
     {
@@ -81,15 +83,16 @@ class Jugadores
         return $this;
     }
 
-    public function isBaja(): ?bool
+    public function getClub(): ?Clubes
     {
-        return $this->baja;
+        return $this->club;
     }
 
-    public function setBaja(?bool $baja): static
+    public function setClub(?Clubes $club): static
     {
-        $this->baja = $baja;
+        $this->club = $club;
 
         return $this;
     }
+
 }
