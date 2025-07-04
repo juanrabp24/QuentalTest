@@ -63,7 +63,7 @@ También puedes arrancar los contenedores desde Docker Desktop si prefieres inte
 Para ejecutar comandos dentro del contenedor (como instalar dependencias con Composer):
 
 ```bash
-docker exec -it php_symfony_apache bash
+docker exec -it symfony_php_apache bash
 ```
 
 Dentro del contenedor, instala las dependencias de PHP con:
