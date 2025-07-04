@@ -99,3 +99,6 @@ Finalmente, abre tu navegador y visita:
 http://quental.test
 ```
 
+* NOTA: Para editar cualquier parte del codigo si quieres permisos
+  `sudo chmod -R 775 var/www/html/QuentalTest`
+
