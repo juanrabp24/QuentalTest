@@ -3,10 +3,15 @@ namespace App\Service\Entrenadores\Alta;
 
 use App\Entity\Entrenadores;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\GeneralServices\CorreoService;
+
 
 class AltaService
 {
-    public function __construct(private EntityManagerInterface $em){}
+    public function __construct(
+        private EntityManagerInterface $em,
+        private CorreoService $correo
+    ){}
 
 
     public function altaEntrenador(array $data): Entrenadores
@@ -24,6 +29,12 @@ class AltaService
 
         $this->em->persist($entrenador);
         $this->em->flush();
+
+        $this->correo->enviar(
+            'juanrabp24@gmail.com',
+            'Nuevo Entrenador creado',
+            'Se ha creado el jugador: ' . $jugador->getNombre() . ' ' . $jugador->getApellidos()
+        );
 
         return $entrenador;
 
