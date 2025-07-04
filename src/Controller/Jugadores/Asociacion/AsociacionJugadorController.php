@@ -30,7 +30,7 @@ class AsociacionJugadorController extends AbstractController
             return new JsonResponse([
                 'tipo' => 'error',
                 'mensaje' => $exception->getMessage(),
-                200
+                500
             ]);
         } catch (\Exception $exception) {
             return new JsonResponse([
