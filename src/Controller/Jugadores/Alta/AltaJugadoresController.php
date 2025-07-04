@@ -14,6 +14,10 @@ class AltaJugadoresController extends AbstractController
 
     #[Route('/jugadores/alta', name: 'alta_jugadores', methods: ['POST'])]
 
+    /*
+    * Esta funcionalidad le pasa al servicio los params enviados por postman, las recojo con el request y las envía al servicio donde se tratan
+    * Da de alta a un Jugador
+    * */
     public function __invoke(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

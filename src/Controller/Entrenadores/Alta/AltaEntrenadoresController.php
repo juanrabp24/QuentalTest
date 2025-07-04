@@ -12,6 +12,10 @@ class AltaEntrenadoresController extends AbstractController
 {
     public function __construct(private AltaService $altaService){}
 
+    /*
+    * Esta funcionalidad le pasa al servicio los params enviados por postman, las recojo con el request y las envía al servicio donde se tratan
+    * Da de alta a un Entrenador
+    * */
     #[Route('/entrenadores/alta', name: 'alta_entrenadores', methods: ['POST'])]
 
     public function __invoke(Request $request): JsonResponse

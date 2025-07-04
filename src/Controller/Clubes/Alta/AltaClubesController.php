@@ -12,6 +12,11 @@ class AltaClubesController extends AbstractController
 {
     public function __construct(private AltaService $altaService){}
 
+    /*
+     * Esta funcionalidad le pasa al servicio los params enviados por postman, las recojo con el request y las envía al servicio donde se tratan
+     * Da de alta a un club
+     * */
+
     #[Route('/clubes/alta', name: 'alta_clubes', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
