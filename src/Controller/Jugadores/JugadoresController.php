@@ -2,18 +2,42 @@
 
 namespace App\Controller\Jugadores;
 
+use App\Service\Jugadores\AltaService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class JugadoresController extends AbstractController
 {
-    #[Route('/jugadores', name: 'app_jugadores')]
-    public function index(): JsonResponse
+    public function __construct(private AltaService $altaService){}
+
+    #[Route('/jugadores/alta', name: 'alta_jugadores', methods: ['POST'])]
+    public function __invoke(Request $request): JsonResponse
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/JugadoresController.php',
-        ]);
+        $data = json_decode($request->getContent(), true);
+
+        try{
+            $jugador = $this->altaService->altaJugador($data);
+            return new JsonResponse([
+                'type' => 'success',
+                'mensaje' => 'Jugador creado correctamente',
+                200
+            ]);
+        }catch (\InvalidArgumentException $exception){
+            return new JsonResponse([
+                'type' => 'error',
+                'mensaje' => $exception->getMessage(),
+                200
+            ]);
+        }catch (\Exception $exception){
+            return new JsonResponse([
+                'type' => 'error',
+                'mensaje' => $exception->getMessage(),
+                500
+            ]);
+        }
+
     }
 }
