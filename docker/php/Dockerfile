@@ -10,7 +10,7 @@ RUN addgroup --gid 1000 symfony && \
     adduser --uid 1000 --gid 1000 --disabled-password --gecos '' symfony && \
     chown -R symfony:symfony /var/www/html
 
-RUN sudo chown -R $USER:$USER ../QuentalTest/
+RUN chown -R www-data:www-data /var/www/html
 
 
 USER symfony
