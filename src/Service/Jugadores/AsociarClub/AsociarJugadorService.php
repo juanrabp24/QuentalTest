@@ -41,7 +41,6 @@ class AsociarJugadorService
 
 
 
-
         if ((int)$total+(int)$data['salario'] > $club->getPresupuesto()) {
             throw new \InvalidArgumentException('El salario del jugador supera el maximo del presupuesto total');
         }
