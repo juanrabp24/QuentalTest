@@ -21,17 +21,21 @@ class AsociarJugadorService
         $jugador = $this->em->getRepository(Jugadores::class)->find($data['jugador']);
         $club = $this->em->getRepository(Clubes::class)->find($data['club']);
 
-        if (!is_null($jugador) && !is_null($club)) {
-
-            $jugador->setClub($club);
-            $jugador->setSalario($data['salario']);
-            $this->em->persist($jugador);
-            $this->em->flush();
-
-            return $jugador;
-        } else {
+        if(is_null($jugador) || is_null($club)){
             throw new \Exception('El jugador o el club no existen', 200);
         }
+
+        if(!is_null($jugador->getClub())){
+            throw new \InvalidArgumentException('Ese jugador ya esta asociado a otro club, para asociarlo debe estar libre');
+        }
+
+        $jugador->setClub($club);
+        $jugador->setSalario($data['salario']);
+        $this->em->persist($jugador);
+        $this->em->flush();
+
+        return $jugador;
+
 
     }
 

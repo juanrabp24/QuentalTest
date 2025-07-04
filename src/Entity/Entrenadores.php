@@ -24,7 +24,7 @@ class Entrenadores
     #[ORM\Column(nullable: true)]
     private ?int $salario = null;
 
-    #[ORM\ManyToOne(inversedBy: 'entrenadores')]
+    #[ORM\ManyToOne( fetch: 'EAGER', inversedBy: 'entrenadores')]
     private ?Clubes $club = null;
 
     public function getId(): ?int

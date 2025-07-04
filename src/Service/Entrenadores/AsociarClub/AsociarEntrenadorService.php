@@ -20,20 +20,24 @@ class AsociarEntrenadorService
             throw new \InvalidArgumentException('Es obligatorio introducir el salario');
         }
 
+
         $entrenador = $this->em->getRepository(Entrenadores::class)->find($data['entrenador']);
         $club = $this->em->getRepository(Clubes::class)->find($data['club']);
 
-        if(!is_null($entrenador) && !is_null($club)){
 
-            $entrenador->setClub($club);
-            $entrenador->setSalario($data['salario']);
-            $this->em->persist($entrenador);
-            $this->em->flush();
-
-            return $entrenador;
-        }else{
+        if(is_null($entrenador) || is_null($club)){
             throw new \Exception('El entrenador o el club no existen',200);
         }
+        if(!is_null($entrenador->getClub())){
+            throw new \InvalidArgumentException('Ese entrenador ya esta asociado a otro club, para asociarlo debe estar libre');
+        }
+
+        $entrenador->setClub($club);
+        $entrenador->setSalario($data['salario']);
+        $this->em->persist($entrenador);
+        $this->em->flush();
+
+        return $entrenador;
 
     }
 
