@@ -3,13 +3,18 @@
 namespace App\Service\Jugadores\Alta;
 
 use App\Entity\Jugadores;
+use App\Event\NuevoJugadorCreadoEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\GeneralServices\CorreoService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 class AltaService
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private CorreoService $correo
+        private CorreoService $correo,
+        private EventDispatcherInterface $dispatcher
+
     ){}
 
     public function altaJugador(array $data): Jugadores
@@ -28,6 +33,9 @@ class AltaService
 
         $this->em->persist($jugador);
         $this->em->flush();
+
+        $this->dispatcher->dispatch(new NuevoJugadorCreadoEvent($jugador));
+
 
         $this->correo->enviar(
             'juanrabp24@gmail.com',
