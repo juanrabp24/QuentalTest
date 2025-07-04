@@ -16,6 +16,7 @@ RUN chown -R www-data:www-data /var/www/html
 USER symfony
 WORKDIR /var/www/html
 
+USER root
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
