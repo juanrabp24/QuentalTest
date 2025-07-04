@@ -1,131 +1,101 @@
+Claro, aquí tienes todo el contenido del README.md en texto plano para que puedas copiarlo fácilmente:
 
-# README - Despliegue Symfony con Docker (Apache)
+# Proyecto Symfony - Prueba Técnica
 
-## Requisitos
-
-- Docker instalado ([https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/))
-- Docker Compose instalado ([https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/))
-- (Opcional) WSL2 si usas Windows ([https://learn.microsoft.com/en-us/windows/wsl/install](https://learn.microsoft.com/en-us/windows/wsl/install/))
+Repositorio: https://github.com/juanrabp24/QuentalTest
 
 ---
 
-## Estructura recomendada de Docker
+## Despliegue y configuración en entorno Windows con WSL y Docker
 
-- `Dockerfile` para la imagen PHP + Symfony + Apache
-- `docker-compose.yml` para servicios: PHP+Apache, base de datos (MySQL o Postgres), etc.
+Esta guía describe cómo desplegar y ejecutar el proyecto usando WSL (Ubuntu 22.04 LTS) y Docker Desktop en Windows.
 
----
+### Requisitos previos
 
-## Ejemplo básico de `docker-compose.yml`
+- **Docker Desktop** para Windows  
+  Instalar desde:  
+  https://docs.docker.com/desktop/setup/install/windows-install/
 
-```yaml
-version: '3.8'
+- **WSL 2 (Subsistema de Windows para Linux)**  
+  Recomendado usar Ubuntu 22.04 LTS.
 
-services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: symfony_web
-    volumes:
-      - ./:/var/www/html
-    ports:
-      - "8080:80"
-    environment:
-      APP_ENV: dev
-    depends_on:
-      - db
+### Configuración previa
 
-  db:
-    image: mysql:8.0
-    container_name: symfony_db
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: symfony
-      MYSQL_USER: symfony
-      MYSQL_PASSWORD: symfony
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
+1. Reinicia tu ordenador y entra en la BIOS/UEFI para verificar que la virtualización está habilitada (Hyper-V para Intel/AMD).
 
-volumes:
-  db_data:
-```
+2. Instala Ubuntu 22.04 LTS desde la Microsoft Store si no lo tienes ya instalado.
 
 ---
 
-## Ejemplo básico de `Dockerfile`
+### Clonar el proyecto
 
-```dockerfile
-FROM php:8.2-apache
+Clona el repositorio utilizando un token de acceso personal de GitHub para evitar problemas de autenticación:
 
-# Instalar extensiones necesarias para Symfony
-RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip git \
-    && docker-php-ext-install zip pdo_mysql
-
-# Habilitar mod_rewrite de Apache (necesario para Symfony)
-RUN a2enmod rewrite
-
-# Copiar configuración de Apache personalizada si tienes (opcional)
-# COPY docker/apache/symfony.conf /etc/apache2/sites-available/000-default.conf
-
-WORKDIR /var/www/html
-
-# Instalar Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-EXPOSE 80
-CMD ["apache2-foreground"]
-```
-
----
-
-## (Opcional) Configuración Apache (`docker/apache/symfony.conf`)
-
-```apache
-<VirtualHost *:80>
-    ServerName localhost
-    DocumentRoot /var/www/html/public
-
-    <Directory /var/www/html/public>
-        AllowOverride All
-        Require all granted
-    </Directory>
-
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
-
----
-
-## Comandos útiles
+- Crear token en: https://github.com/settings/tokens
+- Clonar usando HTTPS con token o SSH según tu configuración.
 
 ```bash
-# Construir las imágenes y levantar contenedores
-docker-compose up -d --build
+git clone https://github.com/juanrabp24/QuentalTest.git
+cd QuentalTest
 
-# Ver logs del contenedor web
-docker-compose logs -f web
+---
 
-# Acceder al contenedor para ejecutar comandos
-docker exec -it symfony_web bash
+### Construir y levantar contenedores Docker
 
-# Instalar dependencias Symfony dentro del contenedor
+Desde la raíz del proyecto:
+
+bash
+docker compose build
+```
+
+Para iniciar los contenedores:
+
+```bash
+docker compose up -d
+```
+
+También puedes arrancar los contenedores desde Docker Desktop si prefieres interfaz gráfica.
+
+---
+
+### Acceder al contenedor PHP/Apache
+
+Para ejecutar comandos dentro del contenedor (como instalar dependencias con Composer):
+
+```bash
+docker exec -it php_symfony_apache bash
+```
+
+Dentro del contenedor, instala las dependencias de PHP con:
+
+```bash
 composer install
-
-# Ejecutar migraciones
-php bin/console doctrine:migrations:migrate
-
-# Parar contenedores
-docker-compose down
 ```
 
 ---
 
-## Acceso a la aplicación
+### Configurar acceso local al proyecto
 
-Después de levantar el contenedor, la app será accesible en:  
-[http://localhost:8080](http://localhost:8080)
+Para acceder al proyecto en el navegador usando el dominio personalizado `quental.test`, añade esta línea al archivo `hosts` de Windows:
+
+```
+127.0.0.1 quental.test
+```
+
+* El archivo `hosts` se encuentra en:
+  `C:\Windows\System32\drivers\etc\hosts`
+
+* Para editarlo, abre el Bloc de notas o tu editor preferido **como administrador** (clic derecho → Ejecutar como administrador).
+
+* Guarda los cambios.
+
+---
+
+### Abrir el proyecto en el navegador
+
+Finalmente, abre tu navegador y visita:
+
+```
+http://quental.test
+```
+
