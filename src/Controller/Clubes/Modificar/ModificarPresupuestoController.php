@@ -15,7 +15,7 @@ class ModificarPresupuestoController extends AbstractController
     {
     }
 
-    #[Route('/clubes/modificar/presupuesto', name: 'modificar_presupuesto_clubes', methods: ['POST'])]
+    #[Route('/clubes/modificar/presupuesto', name: 'modificar_presupuesto_clubes', methods: ['PATCH'])]
     public function __invoke(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

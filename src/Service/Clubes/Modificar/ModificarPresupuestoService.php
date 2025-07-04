@@ -14,7 +14,7 @@ class ModificarPresupuestoService
     public function modificarPresupuesto(array $data): Clubes
     {
         if (empty($data['club'])) {
-            throw new \InvalidArgumentException('Se necesitan las id del club para poder modificar el presupuesto');
+            throw new \InvalidArgumentException('Se necesita la id del club para poder modificar el presupuesto');
         }
         $salario = 0;
 
