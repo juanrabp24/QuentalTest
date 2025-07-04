@@ -19,6 +19,12 @@ class NotificacionService
         $this->em->persist($notificacion);
         $this->em->flush();
 
+        /*
+         * He hecho el evento Listener para que cuando se de de alta un jugador se registre, esto podria adaptarse a cualquier funcionalidad para que se registren notificaciones y se envien por el metodo que se quiera.
+         * Una vez creada la notificación aquí se deberia enviar via Telegram,Whats app cualquier canal que se quiera via API entiendo...
+         * Siento la interpretación de un sistema de notificacion no he hecho casi pero creo que debería funcionar así, más o menos
+         * */
+
 
     }
 }
