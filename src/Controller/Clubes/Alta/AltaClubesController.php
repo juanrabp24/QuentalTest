@@ -1,41 +1,40 @@
 <?php
 
-namespace App\Controller\Jugadores;
+namespace App\Controller\Clubes\Alta;
 
-use App\Service\Jugadores\Alta\AltaService;
+use App\Service\Clubes\Alta\AltaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AltaJugadoresController extends AbstractController
+class AltaClubesController extends AbstractController
 {
     public function __construct(private AltaService $altaService){}
 
-    #[Route('/jugadores/alta', name: 'alta_jugadores', methods: ['POST'])]
-
+    #[Route('/clubes/alta', name: 'alta_clubes', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        try{
-            $this->altaService->altaJugador($data);
+        try {
+            $this->altaService->altaClub($data);
 
             return new JsonResponse([
-                'type' => 'success',
-                'mensaje' => 'Jugador creado correctamente',
+                'tipo' => 'success',
+                'mensaje' => 'Club creado correctamente',
                 200
             ]);
 
-        }catch (\InvalidArgumentException $exception){
+        } catch (\InvalidArgumentException $exception) {
             return new JsonResponse([
-                'type' => 'error',
+                'tipo' => 'error',
                 'mensaje' => $exception->getMessage(),
                 200
             ]);
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return new JsonResponse([
-                'type' => 'error',
+                'tipo' => 'error',
                 'mensaje' => $exception->getMessage(),
                 500
             ]);
@@ -43,3 +42,5 @@ class AltaJugadoresController extends AbstractController
 
     }
 }
+
+
