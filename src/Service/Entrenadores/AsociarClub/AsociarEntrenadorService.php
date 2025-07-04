@@ -28,6 +28,24 @@ class AsociarEntrenadorService
         if(is_null($entrenador) || is_null($club)){
             throw new \Exception('El entrenador o el club no existen',200);
         }
+
+        $total = 0;
+
+        if(!$club->getEntrenadores()->isEmpty()){
+            foreach ($club->getEntrenadores() as $entrenador) {
+                $total += $entrenador->getSalario();
+            }
+        }
+
+        if(!$club->getJugadores()->isEmpty()){
+            foreach ($club->getJugadores() as $jugador) {
+                $total += $jugador->getSalario();
+            }
+        }
+
+        if ((int)$total+(int)$data['salario'] > $club->getPresupuesto()) {
+            throw new \InvalidArgumentException('El salario del Entrenador supera el maximo del presupuesto total');
+        }
         if(!is_null($entrenador->getClub())){
             throw new \InvalidArgumentException('Ese entrenador ya esta asociado a otro club, para asociarlo debe estar libre');
         }
