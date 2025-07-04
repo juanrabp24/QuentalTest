@@ -6,6 +6,16 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install intl pdo pdo_mysql zip \
     && a2enmod rewrite
 
+RUN addgroup --gid 1000 symfony && \
+    adduser --uid 1000 --gid 1000 --disabled-password --gecos '' symfony && \
+    chown -R symfony:symfony /var/www/html
+
+RUN sudo chown -R $USER:$USER ../QuentalTest/
+
+
+USER symfony
+WORKDIR /var/www/html
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
