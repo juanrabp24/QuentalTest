@@ -25,11 +25,16 @@ class BajaJugadorService
             throw new \Exception('El jugador o el club no existen', 200);
         }
 
-
         $jugador->setClub(null);
         $jugador->setSalario(0);
         $this->em->persist($jugador);
         $this->em->flush();
+
+        $this->correo->enviar(
+            'juanrabp24@gmail.com',
+            'Se ha dado de baja',
+            'Se ha dado de baja el jugador: ' . $jugador->getNombre() . ' ' . $jugador->getApellidos()
+        );
 
         return $jugador;
 

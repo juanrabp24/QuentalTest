@@ -30,6 +30,12 @@ class BajaEntrenadorService
         $this->em->persist($entrenador);
         $this->em->flush();
 
+        $this->correo->enviar(
+            'juanrabp24@gmail.com',
+            'Se ha dado de baja',
+            'Se ha dado de baja el entrenador: ' . $entrenador->getNombre() . ' ' . $entrenador->getApellidos()
+        );
+
         return $entrenador;
 
 
