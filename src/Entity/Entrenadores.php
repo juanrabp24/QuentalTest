@@ -27,13 +27,6 @@ class Entrenadores
     #[ORM\ManyToOne(inversedBy: 'entrenadores')]
     private ?Clubes $club = null;
 
-
-    public function __construct()
-    {
-        $this->club = new ArrayCollection();
-    }
-
-
     public function getId(): ?int
     {
         return $this->id;

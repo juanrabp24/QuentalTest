@@ -15,7 +15,7 @@ class AltaService
         if( empty($data['nombre']) || empty($data['apellidos']) || empty($data['dorsal']) ) {
             throw new \InvalidArgumentException('El nombre,apellidos y dorsal es obligatorio');
         }
-         if(!empty($data['salario'])){
+         if(!empty($data['salario']) || !is_null($data['salario'])){
             throw new \InvalidArgumentException('El jugador solo se le puede asignar el salario una vez se haya asignado a un club');
          }
 
