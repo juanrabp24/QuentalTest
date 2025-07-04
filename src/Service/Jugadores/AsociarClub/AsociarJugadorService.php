@@ -28,24 +28,23 @@ class AsociarJugadorService
         $total = 0;
 
         if(!$club->getEntrenadores()->isEmpty()){
-            foreach ($club->getEntrenadores() as $entrenador) {
-                $total += $entrenador->getSalario();
+            foreach ($club->getEntrenadores() as $entrenadorSalario) {
+                $total += $entrenadorSalario->getSalario();
             }
         }
 
         if(!$club->getJugadores()->isEmpty()){
-            foreach ($club->getJugadores() as $jugador) {
-                $total += $jugador->getSalario();
+            foreach ($club->getJugadores() as $jugadorSalario) {
+                $total += $jugadorSalario->getSalario();
             }
         }
+
+
 
 
         if ((int)$total+(int)$data['salario'] > $club->getPresupuesto()) {
             throw new \InvalidArgumentException('El salario del jugador supera el maximo del presupuesto total');
         }
-
-        dump($jugador);
-        die;
 
         if(!is_null($jugador->getClub())){
             throw new \InvalidArgumentException('Ese jugador ya esta asociado a otro club, para asociarlo debe estar libre');

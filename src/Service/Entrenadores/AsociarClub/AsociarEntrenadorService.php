@@ -32,14 +32,14 @@ class AsociarEntrenadorService
         $total = 0;
 
         if(!$club->getEntrenadores()->isEmpty()){
-            foreach ($club->getEntrenadores() as $entrenador) {
-                $total += $entrenador->getSalario();
+            foreach ($club->getEntrenadores() as $entrenadorSalario) {
+                $total += $entrenadorSalario->getSalario();
             }
         }
 
         if(!$club->getJugadores()->isEmpty()){
-            foreach ($club->getJugadores() as $jugador) {
-                $total += $jugador->getSalario();
+            foreach ($club->getJugadores() as $jugadorSalario) {
+                $total += $jugadorSalario->getSalario();
             }
         }
 
