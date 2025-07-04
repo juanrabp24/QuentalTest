@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Jugadores;
+namespace App\Service\Jugadores\Alta;
 
 use App\Entity\Jugadores;
 use Doctrine\ORM\EntityManagerInterface;

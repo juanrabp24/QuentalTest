@@ -2,11 +2,10 @@
 
 namespace App\Controller\Jugadores;
 
-use App\Service\Jugadores\AltaService;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\Jugadores\Alta\AltaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AltaJugadoresController extends AbstractController

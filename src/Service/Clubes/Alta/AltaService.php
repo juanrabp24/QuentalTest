@@ -14,7 +14,7 @@ class AltaService
         if (empty($data['nombre']) || empty($data['estadio']) || empty($data['liga'])) {
             throw new \InvalidArgumentException('El nombre,estadio y la liga a la que pertenece es obligatorio');
         }
-        if (empty($data['presupuesto']) || is_null($data['presupuesto'])) {
+        if (empty($data['presupuesto'])) {
             throw new \InvalidArgumentException('Para crear el club tienes que asignar un presupuesto');
         }
 

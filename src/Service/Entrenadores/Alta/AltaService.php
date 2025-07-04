@@ -1,5 +1,5 @@
 <?php
-namespace App\Service\Entrenadores;
+namespace App\Service\Entrenadores\Alta;
 
 use App\Entity\Entrenadores;
 use Doctrine\ORM\EntityManagerInterface;

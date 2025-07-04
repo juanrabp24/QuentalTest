@@ -2,11 +2,10 @@
 
 namespace App\Controller\Entrenadores;
 
-use App\Service\Entrenadores\AltaService;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\Entrenadores\Alta\AltaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AltaEntrenadoresController extends AbstractController
